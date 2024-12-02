@@ -3,6 +3,7 @@ package main
 import (
 	"advent2024/day1"
 	"advent2024/day2"
+	"advent2024/day3"
 	"fmt"
 	"os"
 )
@@ -14,8 +15,9 @@ type Solver interface {
 func main() {
 	day := os.Args[1]
 	solvers := map[string]Solver{
-		"day1":  day1.Solver{},
-		"day2":  day2.Solver{},
+		"day1": day1.Solver{},
+		"day2": day2.Solver{},
+		"day3": day3.Solver{},
 	}
 	solver, ok := solvers[day]
 	if !ok {

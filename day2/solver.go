@@ -12,7 +12,11 @@ func (solver Solver) Solve() {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("day 2 test 1:")
+	fmt.Println()
 	fmt.Println("day 2 solution 1:")
+	fmt.Println()
+	fmt.Println("day 2 test 2:")
 	fmt.Println()
 	fmt.Println("day 2 solution 2:")
 	fmt.Println()
