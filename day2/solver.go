@@ -24,8 +24,8 @@ func (solver Solver) Solve() {
 	fmt.Println(CountSafeReports(ParseReports(bytes.NewReader(input))))
 
 	fmt.Println("day 2 test 2:")
-	fmt.Println()
+	fmt.Println(CountSafeReportsDampened(ParseReports(bytes.NewReader(testInput))))
 
 	fmt.Println("day 2 solution 2:")
-	fmt.Println()
+	fmt.Println(CountSafeReportsDampened(ParseReports(bytes.NewReader(input))))
 }

@@ -33,3 +33,25 @@ func CountSafeReports(report Report) int {
 
 	return count
 }
+
+func CountSafeReportsDampened(report Report) int {
+	count := 0
+	for _, levels := range report {
+		if levels.IsSafe() {
+			count++
+			continue
+		}
+		dampened := make(Levels, len(levels)-1)
+		for i := range levels {
+			levelsCopy := make(Levels, len(levels))
+			copy(levelsCopy, levels)
+			copy(dampened, append(levelsCopy[:i], levelsCopy[i+1:]...))
+			if dampened.IsSafe() {
+				count++
+				break
+			}
+		}
+	}
+
+	return count
+}

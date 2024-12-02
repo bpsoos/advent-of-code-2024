@@ -11,9 +11,7 @@ type Solver struct{}
 func (solver Solver) Solve() {
 	testInput, err := os.ReadFile("inputs/day1_test.txt")
 	fmt.Println("day 1 test solution 1:")
-	l1, l2 := ParseLocations(bytes.NewReader(testInput))
-	fmt.Printf("%v %v\n", l1, l2)
-	fmt.Println(getSolution1(l1, l2))
+	fmt.Println(getSolution1(ParseLocations(bytes.NewReader(testInput))))
 
 	input, err := os.ReadFile("inputs/day1.txt")
 	if err != nil {
@@ -30,7 +28,7 @@ func (solver Solver) Solve() {
 
 func getSolution1(group1 []int, group2 []int) int {
 	count := 0
-	for i := range len(group1) {
+	for i := range group1 {
 		sum := group1[i] - group2[i]
 		if sum < 0 {
 			sum = -1 * sum
@@ -43,9 +41,9 @@ func getSolution1(group1 []int, group2 []int) int {
 
 func getSolution2(group1 []int, group2 []int) int {
 	score := 0
-	for i := range len(group1) {
+	for i := range group1 {
 		count := 0
-		for j := range len(group1) {
+		for j := range group1 {
 			if group2[j] == group1[i] {
 				count++
 			}
