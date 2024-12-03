@@ -1,6 +1,7 @@
 package day3
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 )
@@ -8,16 +9,29 @@ import (
 type Solver struct{}
 
 func (solver Solver) Solve() {
-	_, err := os.ReadFile("inputs/day3.txt")
+	testInput, err := os.ReadFile("inputs/day3_test.txt")
+	if err != nil {
+		panic(err)
+	}
+	input, err := os.ReadFile("inputs/day3.txt")
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println("day 3 test 1:")
-	fmt.Println()
+	fmt.Println(calculate(ParseMemory(bytes.NewReader(testInput))))
 	fmt.Println("day 3 solution 1:")
-	fmt.Println()
+	fmt.Println(calculate(ParseMemory(bytes.NewReader(input))))
 	fmt.Println("day 3 test 2:")
 	fmt.Println()
 	fmt.Println("day 3 solution 2:")
 	fmt.Println()
+}
+
+func calculate(muls []Mul) int {
+	result := 0
+	for _, mul := range muls {
+		result += mul[0] * mul[1]
+	}
+
+	return result
 }
