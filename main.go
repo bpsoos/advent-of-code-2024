@@ -7,6 +7,7 @@ import (
 	"advent2024/day4"
 	"advent2024/day5"
 	"advent2024/day6"
+	"advent2024/day7"
 	"fmt"
 	"os"
 )
@@ -24,6 +25,7 @@ func main() {
 		"day4": day4.Solver{},
 		"day5": day5.Solver{},
 		"day6": day6.Solver{},
+		"day7": day7.Solver{},
 	}
 	solver, ok := solvers[day]
 	if !ok {
