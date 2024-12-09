@@ -9,7 +9,7 @@ import (
 type Solver struct{}
 
 func (solver Solver) Solve() {
-	_, err := os.ReadFile("inputs/day6.txt")
+	input, err := os.ReadFile("inputs/day6.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -18,11 +18,11 @@ func (solver Solver) Solve() {
 		panic(err)
 	}
 	fmt.Println("day 6 test 1:")
-	fmt.Println(NewStepCounter().Count(ParseMap(bytes.NewReader(testInput))))
+	fmt.Println(NewStepCounter(ParseMap(bytes.NewReader(testInput))).Count())
 	fmt.Println("day 6 solution 1:")
-	fmt.Println()
+	fmt.Println(NewStepCounter(ParseMap(bytes.NewReader(input))).Count())
 	fmt.Println("day 6 test 2:")
-	fmt.Println()
+	fmt.Println(NewStepCounter(ParseMap(bytes.NewReader(testInput))).CountLoop())
 	fmt.Println("day 6 solution 2:")
-	fmt.Println()
+	fmt.Println(NewStepCounter(ParseMap(bytes.NewReader(input))).CountLoop())
 }

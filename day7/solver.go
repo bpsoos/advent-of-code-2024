@@ -1,6 +1,7 @@
 package day7
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 )
@@ -8,15 +9,16 @@ import (
 type Solver struct{}
 
 func (solver Solver) Solve() {
-	_, err := os.ReadFile("inputs/day7.txt")
+	testInput, err := os.ReadFile("inputs/day7.txt")
 	if err != nil {
 		panic(err)
 	}
-	_, err = os.ReadFile("inputs/day7_test.txt")
+	testInput, err = os.ReadFile("inputs/day7_test.txt")
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println("day 7 test 1:")
+	ParseEquations(bytes.NewReader(testInput))
 	fmt.Println()
 	fmt.Println("day 7 solution 1:")
 	fmt.Println()
@@ -25,3 +27,5 @@ func (solver Solver) Solve() {
 	fmt.Println("day 7 solution 2:")
 	fmt.Println()
 }
+
+

@@ -10,30 +10,38 @@ func ParseMap(rawMap io.Reader) *LabMap {
 	labMap := new(LabMap)
 
 	i := 0
+	width := 0
+	positions := make([][]Position, 0)
 	for scanner.Scan() {
 		if scanner.Text() == "" {
 			continue
 		}
-		row := make([]Position, 0)
+		width = len(scanner.Text())
+		posRow := make([]Position, 0)
 		for j, char := range scanner.Text() {
-			pos := Position{
-				IsObstruction: false,
-				X:             j,
-				Y:             i,
-			}
+			pos := NewPosition(j, i)
 			if char == '#' {
 				pos.IsObstruction = true
 			}
 			if char == '^' {
+				dir := DirectionUp
+				pos.VisitDirections = []Direction{DirectionUp}
+				labMap.StepCount = 1
+				labMap.startPosition = *pos
 				labMap.guard = &Guard{
-					Position:  pos,
-					Direction: UpDirection,
+					Position:  *pos,
+					Direction: dir,
 				}
 			}
-			row = append(row, pos)
+			posRow = append(posRow, *pos)
 		}
-		labMap.positions = append(labMap.positions, row)
+		positions = append(positions, posRow)
+		i++
 	}
+
+	labMap.positions = positions
+	labMap.width = width
+	labMap.height = i
 
 	return labMap
 }

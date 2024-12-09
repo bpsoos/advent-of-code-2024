@@ -5,23 +5,39 @@ type Guard struct {
 	Direction Direction
 }
 
-func (g *Guard) TurnRight() {
-	if g.Direction == LeftDirection {
-		g.Direction = UpDirection
-		return
+func (g *Guard) TurnRightDir() Direction {
+	switch g.Direction {
+	case DirectionUp:
+		return DirectionRight
+	case DirectionRight:
+		return DirectionDown
+	case DirectionDown:
+		return DirectionLeft
+	case DirectionLeft:
+		return DirectionUp
+	default:
+		panic("invalid direction")
 	}
-	g.Direction++
 }
 
-func (g *Guard) Step() {
+func (g *Guard) TurnRight() {
 	switch g.Direction {
-	case UpDirection:
-		g.Y--
-	case DownDirection:
-		g.Y++
-	case LeftDirection:
-		g.X--
-	case RightDirection:
-		g.X++
+	case DirectionUp:
+		g.Direction = DirectionRight
+	case DirectionRight:
+		g.Direction = DirectionDown
+	case DirectionDown:
+		g.Direction = DirectionLeft
+	case DirectionLeft:
+		g.Direction = DirectionUp
+	default:
+		panic("invalid direction")
+	}
+}
+
+func (g Guard) DeepCopy() *Guard {
+	return &Guard{
+		Position:  g.Position.DeepCopy(),
+		Direction: g.Direction,
 	}
 }
