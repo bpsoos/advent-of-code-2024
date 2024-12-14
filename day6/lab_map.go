@@ -153,7 +153,7 @@ func (lm LabMap) DeepCopy() *LabMap {
 	positions := make([][]Position, len(lm.positions))
 	for i := range positions {
 		positions[i] = make([]Position, len(lm.positions[0]))
-		for j := range positions {
+		for j := range lm.positions[0] {
 			positions[i][j] = lm.positions[i][j].DeepCopy()
 		}
 	}

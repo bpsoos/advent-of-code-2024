@@ -1,24 +1,36 @@
 package day7
 
-import "fmt"
+import (
+	"math"
+	"strconv"
+)
 
 type EquationEvaluator struct{}
 
 func (od *EquationEvaluator) Evaluate(ce *CalibrationEquation) bool {
-	operatorFlips := make([]bool, len(ce.Equation)-1)
-	return evalEquation(operatorFlips, ce)
+	return evalEquation(2, ce, updateVal)
 }
 
-func evalEquation(opFlips []bool, ce *CalibrationEquation) bool {
-	for i := 0; i < len(opFlips)*len(opFlips); i++ {
-		val := uint64(ce.Equation[0])
-		s := fmt.Sprintf("%b", i)
-		for range len(opFlips) - len(s) {
+func (od *EquationEvaluator) EvaluateWithThreeOperators(ce *CalibrationEquation) bool {
+	return evalEquation(3, ce, updateValWithThreeOperators)
+}
+
+func evalEquation(
+	base int,
+	ce *CalibrationEquation,
+	updateVal func(operator rune, val uint64, nextVal uint64) uint64,
+) bool {
+	maxPermutations := int(math.Pow(float64(base), float64(len(ce.Equation)-1)))
+
+	for i := 0; i < maxPermutations; i++ {
+		val := ce.Equation[0]
+		s := strconv.FormatUint(uint64(i), base)
+		for range len(ce.Equation) - 1 - len(s) {
 			s = "0" + s
 		}
 
 		for j, b := range s {
-			val = updateVal(b == '0', val, ce.Equation[j+1])
+			val = updateVal(b, val, ce.Equation[j+1])
 		}
 
 		if val == ce.TestValue {
@@ -29,32 +41,30 @@ func evalEquation(opFlips []bool, ce *CalibrationEquation) bool {
 	return false
 }
 
-func updateVal(flip bool, val uint64, nextVal int) uint64 {
-	if flip {
-		return val * uint64(nextVal)
+func updateVal(operator rune, val uint64, nextVal uint64) uint64 {
+	if operator == '0' {
+		return val * nextVal
 	}
 
-	return val + uint64(nextVal)
+	return val + nextVal
 }
 
-type Permutator struct {
-	permutable []bool
-	i          int
-	j          int
-}
-
-func NewPermutator(size int) *Permutator {
-	return &Permutator{
-		permutable: make([]bool, size),
-		i:          size * size,
-		j:          size,
+func updateValWithThreeOperators(operator rune, val uint64, nextVal uint64) uint64 {
+	if operator == '0' {
+		return val * nextVal
 	}
-}
+	if operator == '1' {
+		return val + nextVal
+	}
+	if operator == '2' {
+		val, err := strconv.ParseUint(strconv.FormatUint(val, 10)+strconv.FormatUint(nextVal, 10), 0, 64)
 
-func (p *Permutator) Next() bool {
-	return p.i < 0
-}
+		if err != nil {
+			panic(err)
+		}
 
-func (p Permutator) Get() []bool {
-	return p.permutable
+		return val
+	}
+	panic("unknown operator")
+
 }

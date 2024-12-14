@@ -2,7 +2,6 @@ package day7
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"strconv"
 	"strings"
@@ -10,7 +9,7 @@ import (
 
 type CalibrationEquation struct {
 	TestValue uint64
-	Equation  []int
+	Equation  []uint64
 }
 
 func ParseEquations(rawEquations io.Reader) []CalibrationEquation {
@@ -27,9 +26,9 @@ func ParseEquations(rawEquations io.Reader) []CalibrationEquation {
 			panic(err)
 		}
 		rawEquation := strings.Split(strings.TrimSpace(splitLine[1]), " ")
-		equation := make([]int, len(rawEquation))
+		equation := make([]uint64, len(rawEquation))
 		for i := range rawEquation {
-			num, err := strconv.Atoi(rawEquation[i])
+			num, err := strconv.ParseUint(rawEquation[i], 10, 64)
 			if err != nil {
 				panic(err)
 			}
@@ -43,6 +42,5 @@ func ParseEquations(rawEquations io.Reader) []CalibrationEquation {
 			})
 	}
 
-	fmt.Printf("equations: %v\n", equations)
 	return equations
 }
